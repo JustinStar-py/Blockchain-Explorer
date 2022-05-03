@@ -1,0 +1,233 @@
+html, body {
+	min-height: 100vh;
+	overflow: hidden;
+}
+html {
+	font-size: 62.5%;
+}
+body {
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: "Helvetica", "Arial", sans-serif;
+	font-weight: bold;
+}
+* {
+	box-sizing: border-box;
+}
+@media only screen and (min-width: 600px) {
+	.frame{
+		filter: hue-rotate(79deg);
+		animation: filter-color 10s infinite;
+	}
+	@keyframes filter-color {
+		0% {filter: hue-rotate(300deg);}
+		50% {filter: hue-rotate(130deg);}
+		100% {filter: hue-rotate(300deg);}
+	}
+   .frame {
+   	display: flex;
+   	flex-direction: column;
+   	width: 800px;
+   	height: 400px;
+   	overflow: hidden;
+   	position: relative;
+   	color: white;
+   	margin: 2em;
+   	padding-top: 2em;
+   	border-radius: 2em;
+   	box-shadow: 0 4px 10px rgba(0, 0, 0, .75), 0 8px 30px rgba(0, 0, 0, .5);
+   }
+   .frame:before {
+   	content: '';
+   	display: block;
+   	width: 4em;
+   	height: 0.6em;
+   	background: white;
+   	margin: 0 auto;
+   	z-index: 10;
+   	border-radius: 10em;
+   	mix-blend-mode: overlay;
+   }
+   .frame-header .image {
+    margin-right: 1.5em;
+    position: absolute;
+	left: 37%;
+    }
+}
+ .frame-header {
+	position: relative;
+	z-index: 10;
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	padding: 2rem;
+}
+.frame-header .image > img {
+    width: 40%;
+    border-radius: .5em;
+    position: relative;
+    top: 75px;
+}
+.frame-header .info {
+	padding:3px;
+}
+.frame-header .info .subtitle {
+	font-size: 1.2rem;
+	margin-top: 0.25em;
+	border:1px solid rgb(255, 255, 255);
+	border-radius:10px;
+	padding:5px;
+	line-height: 17px;
+}
+.frame-lyrics {
+	position: relative;
+	z-index: 10;
+	flex-grow: 1;
+	padding: 2rem;
+	padding-top: 0;
+	font-size: 2rem;
+	overflow-y: auto;
+}
+.frame-lyrics > div {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.frame-lyrics > div + div {
+	margin-top: 1.4em;
+}
+.frame-lyrics > div.active {
+	color: white;
+	font-size: 3rem;
+	margin-top: 0.8em;
+}
+
+.search {
+	transition: all 0.2s linear;
+    position: absolute;
+    top: 60%;
+    height: 40px;
+    width: 600px;
+    border: 5px solid #ff000000;
+    border-radius: 7px;
+	outline: 0px;
+	font-size: 17px;
+    box-shadow: 1px 1px 40px #000000b0;
+}
+.search:focus {
+    width: 620px;
+    border: 0px solid #3834346c;
+    border-radius: 7px;
+    box-shadow: 7px 7px 30px #000000e8;
+}
+.frame-lyrics > div:not(.active) {
+	filter: blur(0.05px);
+}
+.frame-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: 0;
+	z-index: 0;
+	overflow: hidden;
+	border-radius: 2em;
+	filter: blur(20px);
+}
+.frame-bg .bg-color, .frame-bg .bg-black {
+	width: 200%;
+	position: absolute;
+	border-radius: 100em;
+	animation: rotate 30s linear infinite;
+}
+.frame-bg .bg-color {
+	right: 0;
+	top: 0;
+	filter: blur(40px);
+	z-index: 10;
+	mix-blend-mode: luminosity;
+}
+.frame-bg .bg-color-2 {
+	left: 0%;
+	top: 5%;
+	filter: blur(40px);
+	z-index: 10;
+	mix-blend-mode: luminosity;
+}
+.frame-bg .bg-black {
+	left: 0;
+	bottom: 0;
+	filter: blur(40px);
+	z-index: 1;
+	animation-direction: reverse;
+	animation-delay: 10s;
+}
+@keyframes rotate {
+	0% {
+		transform: rotate(60deg);
+   }
+   20% {
+	transform: rotate(120deg);
+  }
+  40% {
+  	transform: rotate(180deg);
+  }
+  60% {
+	transform: rotate(240deg);
+  }
+  80% {
+	transform: rotate(300deg);
+   }
+   100% {
+	transform: rotate(360deg);
+}
+}
+.icon{
+	position: absolute;
+	right: 26.5%;
+	top: 60%;
+	height: 55px;
+	width: 55px;
+	text-align: center;
+	line-height: 55px;
+	font-size: 20px;
+	color: #644bff;
+	cursor: pointer;
+	outline: none;
+  }
+i.fas.fa-search {
+    position: relative;
+    bottom: 20%;
+    font-size: inherit;
+	outline: none;
+}
+button.btn-submit {
+    outline: none;
+    border-radius: 7px;
+    width: 43px;
+    height: 40px;
+    background: #fffffffd;
+	border: 0px;
+	transition: all 0.2s linear;
+}
+button.btn-submit:hover {
+    outline: none;
+    border-radius: 13px;
+    background: #ff0055fd;
+}
+button.btn-submit:focus {
+    outline: initial;
+}
+#particles{
+	z-index: -10; 
+	position: absolute; 
+	width:100%; 
+	height:100%; 
+}
+
+
+
+
+

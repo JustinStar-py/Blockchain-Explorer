@@ -1,0 +1,464 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "detail_meta_tags.html" %}
+    {% include "assets.html" %}
+</head>
+<body>
+  <div style="z-index: -10; position: absolute; width:100%; height:100%;" id="particles"></div>
+    {% include 'navbar.html' %}
+    {% if object_list.error or object_list.errors %}
+    <div class="container">
+      <div class="jumbotron" style="text-align-last: center;">
+        <img class="img-404" src="{% static 'images/404.png' %}" width="300" alt="404 Error">
+           <h1 class="p-404">404 - Page (or Coin) not Found!  <i class="fa fa-exclamation-triangle" style="font-size: 30px;"></i></h1>
+          <h1 class="p-404-2"><a href="{% url 'scan:scanner' %}"> Go to Home! <i class="fa fa-external-link" style="font-size: 30px;"></i></a></h1> 
+          </div>
+       </div>
+    {% else %}
+        <!-- <p>
+            {{matic}}
+        </p>
+        <p>
+            {{ethereum}}
+        </p> -->
+      </div>
+      {% if request.resolver_match.kwargs.search|length > 2 and request.resolver_match.kwargs.search|length < 13 %}
+      <div class="container">
+        <div class="jumbotron">
+           <h1 class="coin-name"> 
+             <img class="coin-logo" src="{{object_list.image.large}}" width=100 alt="{{object_list.name}} Logo">
+              <p class="name coin-name-p">{{object_list.name}}</p>
+                <div  class="price-div bg-green-div bg-red-div">
+                   <p class="price three-digits"><i class="fa fa-usd" style="font-size: 30px;"></i>
+                     <span class="three-digits"> {{object_list.market_data.current_price.usd}} </span>
+                      <span class="span1">
+                          <span class="span2 h6 bg-green bg-red p-1 price-24 fa fa-caret-down p-c-24">
+                             {{object_list.market_data.price_change_percentage_24h_in_currency.usd}}% <i class="" aria-hidden="true"></i>
+                           </span>
+                      </span>
+                    </p>
+                  <p class="eth" >{{object_list.market_data.current_price.eth}} ETH</p>
+                <p class="btc three-digits">{{object_list.market_data.current_price.btc}} <i class="fa fa-btc" ></i></p>
+                </div>
+             </h1>
+             <p>
+              <div class="info-div-f">
+              <div class="info-div">
+                  <i class="fa fa-rank"></i>
+                   Market Rank: <span class="text-warning font-weight-bold three-digits"> #{{object_list.market_data.market_cap_rank}} </span>
+              </div>
+              <div class="info-div">
+                 <i class="fa fa-rank"></i>
+                 Github: <a href="{{object_list.links.repos_url.github.0}}" target="_blank" style="font-weight: 500;"> Link to Project </a> 
+              </div>
+              <div class="info-div">
+                 <i class="fa fa-rank"></i>
+                 Hashing Algorithm: <span class="text-danger font-weight-bold"> #{{object_list.hashing_algorithm}} </span>
+              </div> 
+           </div>
+            </p>
+            <div class="data-div-f">
+                <div class="data-div"> 
+                  <p> MarketCap: </p>
+                     <p class="three-digits"> {{object_list.market_data.market_cap.usd}}</p>
+                </div>    
+                <div class="data-div"> 
+                  <p> Circulating Supply:</p>
+                     <p class="three-digits">{{object_list.market_data.circulating_supply}}</p>
+                </div>    
+                <div class="data-div">
+                  <p> Total Supply:  </p>
+                     <p class="three-digits">{{object_list.market_data.total_supply}}</p>
+                </div>   
+                <div class="data-div" style="text-align: center;">
+                  <p> Price Change 1h: 	&nbsp;</p>
+                        <p class="price-color font-weight-bold text-red  fa fa-caret-down p-c-24">
+                          {{object_list.market_data.price_change_percentage_1h_in_currency.usd}}
+                        </p>
+                  </div>    
+                  <div class="data-div">
+                    <p> 24h : 	&nbsp;</p>
+                          <p class="price-color font-weight-bold text-red  fa fa-caret-down p-c-24">
+                            {{object_list.market_data.price_change_percentage_24h}}
+                          </p>
+                    </div>    
+                    <div class="data-div">
+                      <p> 7d : 	&nbsp;</p>
+                            <p class="price-color font-weight-bold text-red  fa fa-caret-down p-c-24">
+                              {{object_list.market_data.price_change_percentage_7d}}
+                            </p>
+                      </div>    
+                      <div class="data-div">
+                        <p> 1m : &nbsp;</p>
+                              <p class="price-color font-weight-bold text-red  fa fa-caret-down p-c-24">
+                                {{object_list.market_data.price_change_percentage_30d}}
+                              </p>
+                        </div>  
+                        <div class="data-div">
+                          <p> 2m :	&nbsp;</p>
+                                <p class="price-color font-weight-bold text-red fa fa-caret-down p-c-24">
+                                  {{object_list.market_data.price_change_percentage_60d}}
+                              </p>
+                      </div>  
+                      <div class="data-div">
+                        <p> 1y  : 	&nbsp;</p>
+                              <p class="price-color font-weight-bold text-red  fa fa-caret-down p-c-24">
+                                {{object_list.market_data.price_change_percentage_1y}}
+                            </p>
+                    </div>      
+            </div>
+         </div>
+
+         <div class="jumbotron">
+           <div>
+              <h1 class="coin-name"> 
+               <img class="coin-logo" id="coin-logo-2"  src="{{object_list.image.large}}" width=50 alt="{{object_list.name}} Logo">
+                  <p class="name" id="p-name"><i class="fa fa-chart-bar"></i> {{object_list.name}} Chart Live </p>
+              </h1>
+           </div>
+         <!-- Chart Widget -->
+         <span style="display: none;" id="coin">Binance:{{object_list.symbol}}USDT</span>
+        <div class="tradingview-widget-container">
+
+  <div id="tradingview_1639d">
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/{{object_list.symbol}}USD/?exchange=COINBASE" rel="noopener" target="_blank"><span class="blue-text"></span></a></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+  var coin =  document.getElementById("coin").innerHTML.toUpperCase();
+  new TradingView.widget(
+  {
+  "autosize": true,
+  "symbol":coin,
+  "interval": "1",
+  "timezone": "Etc/UTC",
+  "theme": "dark",
+  "style": "1",
+  "locale": "en",
+  "toolbar_bg": "#f1f3f6",
+  "enable_publishing": false,
+  "hide_side_toolbar": false,
+  "allow_symbol_change": true,
+  "container_id": "tradingview_1639d"
+}
+  );
+  </script>
+       </div>
+        </div>
+      </div>
+        
+          <div class="jumbotron jumbotron-3">
+            <div>
+               <h1 class="coin-name"> 
+                <img class="coin-logo" id="coin-logo-2"  src="{{object_list.image.large}}" width=50 alt="{{object_list.name}} Logo">
+                   <p class="name" id="p-name-3"><i class="fa fa-history" aria-hidden="true"></i>
+                     {{object_list.name}} History </p>
+               </h1>
+            </div>
+            <p class="coin-des1"  id="des1">{{object_list.description.en|safe|truncatechars:200}}</p>
+            <button class="read-btn" id="btn-r" onclick="Readmore()">Read More!</button>
+            <p class="coin-des2 d-none" id="des2">{{object_list.description.en|safe}}</p>
+            <button class="read-btn d-none" id="btn-c" onclick="Close()">Close!</button>
+        </div>
+
+            </div>
+            {% else %}
+            <section>
+              <div class="tbl-header">
+                <table cellpadding="0" cellspacing="0">
+              <thead>
+                    <tr id="Balance">
+                        <h2 class="table-title">Balance</h2>
+                    </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="tbl-content">
+              <table >
+                <tbody>
+                  {% if "T" in request.resolver_match.kwargs.search.0 %}
+                  <tr class="table-p">
+                  <td>Logo</th>
+                  <td>Name</th>
+                  <td>Symbol</th>
+                  <td>Value</th>
+                  <td>Decimals</th>
+                  <td>TokenId</th>
+                  </td>
+                       {% for obj in balance %}
+                           <tr>
+                              <td><img src="{{obj.0}}" width=30 alt="{{obj.1}}"></td>
+                              <td>{{obj.1}}</td>
+                              <td>{{obj.2}}</td>
+                              <td>{{obj.3}}</td>
+                              <td>{{obj.4}}</td>
+                              <td>{{obj.5}}</td>
+                            </tr>
+                        {% endfor %}
+            {% elif request.resolver_match.kwargs.search|length > 42 and request.resolver_match.kwargs.search|length < 46 %}
+            <tr class="table-p">
+              <td>Logo</th>
+              <td>Name</th>
+              <td>Symbol</th>
+              <td>Balance</th>
+              <td>Total Sent</th>
+              <td>Total Received</th>
+              </td>
+            <tr>
+              {{ object_list.data.solana.out.amount }}
+              <td><img src="{% static 'images/icons/SOL.png' %}" width=30 alt="Solana Logo"></td>
+              <td id="cb-name">Solana</td>
+              <td id="cb-symbol">SOL</td>
+              <td id="sum-coin"></td>
+              {% for obj in object_list.data.solana.out %}
+              <td id="s-coin"> {{obj.amount}} </td>
+              {% endfor %}
+              {% for obj in object_list.data.solana.in %}
+              <td id="r-coin"> {{obj.amount}} </td>
+              {% endfor %}
+            </tr>
+            {% elif "b" in request.resolver_match.kwargs.search.0 and request.resolver_match.kwargs.search|length > 40 or request.resolver_match.kwargs.search|length == 34 and not "T" in request.resolver_match.kwargs.search.0 %}
+                <tr class="table-p">
+                  <td>Logo</th>
+                  <td>Name</th>
+                  <td>Symbol</th>
+                  <td>Balance</th>
+                  <td>Total Sent</th>
+                  <td>Total Received</th>
+                  </td>
+                <tr>
+                  {{ object_list.data.bitcoin.outputs.value }}
+                  <td><img src="{% static 'images/icons/BTC.png' %}" width=30 alt="{{obj.1}}"></td>
+                  <td id="cb-name">Bitcoin</td>
+                  <td id="cb-symbol">btc</td>
+                  <td id="sum-coin"></td>
+                  {% for obj in object_list.data.bitcoin.inputs %}
+                  <td id="s-coin"> {{obj.value}} </td>
+                  {% endfor %}
+                  {% for obj in object_list.data.bitcoin.outputs %}
+                  <td id="r-coin"> {{obj.value}} </td>
+                  {% endfor %}
+                </tr>
+                {% else %}
+                  <tr class="table-p">
+                    <td>Logo</th>
+                    <td>Name</th>
+                    <td>Symbol</th>
+                    <td>Amount</th>
+                    <td>Decimals</th>
+                    <td>Address</th>
+                </td>
+                  {% for obj in object_list.data.ethereum.address %}
+                    {% for b in obj.balances %}
+                     <tr>
+                         <td><img src="/static/images/icons/{{b.currency.symbol}}.png" onerror="this.src='/static/images/defualt-token-logo.webp'" width=40 alt="{{b.currency.name}} Logo"></td>
+                         <td>{{b.currency.name|truncatechars:14}}</td>
+                         <td>{{b.currency.symbol}}</td>
+                         <td>{{b.value}}</td>
+                         <td>{{b.currency.decimals}}</td>
+                         <td>{{b.currency.address|truncatechars:14}}</td>
+                     </tr>
+                    {% endfor %}
+                {% endfor %}
+              {% endif %}
+               </tbody>
+              </table>
+            </div>
+                </section>
+           <!-- ------------------- -->
+           {% if "b" in request.resolver_match.kwargs.search.0 and request.resolver_match.kwargs.search|length > 13 or "b" in request.resolver_match.kwargs.search.0 and request.resolver_match.kwargs.search|length == 34 or request.resolver_match.kwargs.search|length > 42 %}
+                 <h3 class="font-weight-bold" id="tr-msg">You can see Transactions in v2</h3>
+           {% else %}
+             <section>
+        <div class="tbl-header" style="background-color: #6414eea8 !important;">
+          <table cellpadding="0" cellspacing="0">
+            <thead>
+              <tr id="Transactions">
+                <h2 class="table-title">Transactions [received]</h2>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="tbl-content">
+          <table >
+            <tbody>
+             <tr class="table-p">
+                <td>From</td>
+                <td>To</td>
+                <td>External</td>
+                <td>Symbol</td>
+                <td>Amount</td>
+                <td>Hash</td>
+                <td>Date</td>
+            </tr>
+            {% if "T" in request.resolver_match.kwargs.search.0 %}
+               {% for info in object_list.data.tron.in %}
+                   <tr>
+                     <td>{{info.sender.address|truncatechars:18}}</td>
+                     <td>{{request.resolver_match.kwargs.search|truncatechars:18}}</td>
+                     <td>{% if info.success == True %} <img width="27" src="{% static 'images/true.png' %}"> (transaction submited) {% else %}<img width="27" src="{% static 'images/false.png' %}"> (incomplete transaction){% endif %} </td>
+                     <td>{{info.currency.symbol}}</td>
+                     <td>{{info.amount}}</td>
+                     <td><a href="https://tronscan.io/#/transaction/{{info.txHash}}" target="_blank">{{info.txHash|truncatechars:18}}</a></td>
+                     <td>{{info.date.date|truncatechars:18}}</td>
+                 </tr>
+               {% endfor %}
+            {% else %}
+                {% for info in transaction.inbound %}
+              <tr>
+                     <td>{{info.address.address|truncatechars:18}}</td>
+                     <td>{{request.resolver_match.kwargs.search|truncatechars:18}}</td>
+                     <td>{% if info.external == True %} <img width="27" src="{% static 'images/true.png' %}"> (clear transaction) {% else %}<img width="27" src="{% static 'images/false.png' %}"> (unclear transaction){% endif %} </td>
+                     <td>{{info.currency.symbol}}</td>
+                     <td>{{info.amount}}</td>
+                     <td><a href="https://bscscan.com/tx/{{info.transaction.hash}}" target="_blank">{{info.transaction.hash|truncatechars:18}}</a></td>
+                     <td>{{info.block.timestamp.time|truncatechars:18}}</td>
+                 </tr>
+                  {% endfor %}
+             {% endif %}
+           </tbody>
+          </table>
+        </div>
+                 </section>
+             <!-- ---------------- -->
+           <section>
+        <div class="tbl-header" style="background-color: #6414eea8 !important;">
+          <table cellpadding="0" cellspacing="0">
+            <thead >
+              <tr>
+                <h2 class="table-title">Transactions [sent]</h2>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="tbl-content">
+          <table >
+            <tbody>
+               <tr class="table-p">
+                   <td>From</td>
+                   <td>To</td>
+                   <td>External</td>
+                   <td>Symbol</td>
+                   <td>Amount</td>
+                   <td>Hash</td>
+                   <td>Date</td>
+               </tr>
+              {% if "T" in request.resolver_match.kwargs.search.0 %}
+                 {% for info in object_list.data.tron.out %}
+                  <tr>
+                    <td>{{request.resolver_match.kwargs.search|truncatechars:18}}</td>
+                    <td>{{info.receiver.address|truncatechars:18}}</td>
+                    <td>{% if info.success == True %} <img width="27" src="{% static 'images/true.png' %}"> (transaction submited) {% else %}<img width="27" src="{% static 'images/false.png' %}"> (incomplete transaction){% endif %} </td>
+                    <td>{{info.currency.symbol}}</td>
+                    <td>{{info.amount}}</td>
+                    <td><a href="https://tronscan.io/#/transaction/{{info.txHash}}" target="_blank">{{info.txHash|truncatechars:18}}</a></td>
+                    <td>{{info.date.date|truncatechars:18}}</td>
+                </tr>
+                {% endfor %}
+           {% else %}
+              {% for info in transaction.outbound %}
+              <tr>
+                     <td>{{request.resolver_match.kwargs.search|truncatechars:18}}</td>
+                     <td>{{info.address.address|truncatechars:18}}</td>
+                     <td>{% if info.external == True %} <img width="27" src="{% static 'images/true.png' %}"> (clear transaction) {% else %}<img width="27" src="{% static 'images/false.png' %}"> (unclear transaction){% endif %} </td>
+                     <td>{{info.currency.symbol}}</td>
+                     <td>{{info.amount}}</td>
+                     <td><a href="https://bscscan.com/tx/{{info.transaction.hash}}" target="_blank">{{info.transaction.hash|truncatechars:18}}</a></td>
+                     <td>{{info.block.timestamp.time|truncatechars:18}}</td>
+                 </tr>
+                {% endfor %}
+            {% endif %}
+           </tbody>
+          </table>
+        </div>
+            </section>
+         {% endif %}
+    {% endif %}
+{% endif %}
+<!-- {{object_list}} -->
+  <script src="{% static 'js/atoms.js' %}"></script>
+  <script>
+    if (document.getElementById("s-coin")){
+      const num1 = parseFloat(document.getElementById("s-coin").innerHTML);
+      const num2 = parseFloat(document.getElementById("r-coin").innerHTML);
+      const sum = parseFloat(document.getElementById("sum-coin").innerHTML = (num2-num1).toFixed(8) +" " + document.getElementById("cb-symbol").innerHTML);
+    }
+    function commafy( num ) {
+         var str = num.toString().split('.');
+         if (str[0].length >= 3) {
+             str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+         }
+         if (str[1] && str[1].length >= 5) {
+             str[1] = str[1].replace(/(\d{3})/g, '$1 ');
+         }
+         return str.join('.');
+     }
+    var three_digits = document.getElementsByClassName("three-digits")
+    if (three_digits){
+        for (let num = 0; num < three_digits.length; num++){
+          if (parseFloat(three_digits[num].innerHTML) > 3){
+             var edited = commafy(parseFloat(three_digits[num].innerHTML))
+             three_digits[num].innerHTML = edited
+        }
+      }
+   }
+   function green_red(){
+          var pch24 = document.getElementsByClassName('p-c-24')
+          for (let num = 0; num < pch24.length; num++){
+            pch24[num].innerHTML =  parseFloat(pch24[num].textContent).toFixed(2) + '%'
+          }
+
+          var price_24 = document.getElementsByClassName("price-24")
+          for (let num = 0; num < price_24.length; num++){
+              if (parseFloat(price_24[num].innerHTML) > 0){
+                    price_24[num].classList.remove('bg-red');
+                    price_24[num].closest(".price-div").classList.remove('bg-red-div');
+                if (price_24[num].parentElement.tagName=="SPAN"){ 
+                  price_24[num].classList.remove('fa-caret-down');
+                  price_24[num].classList.add('fa-caret-up');
+                   }
+                }
+           }
+      }
+        var price_color = document.getElementsByClassName("price-color")
+          for (let num = 0; num < price_color.length; num++){
+            if (parseFloat(price_color[num].innerHTML) > 0){
+                    price_color[num].classList.remove('text-red','fa-caret-down');
+                    price_color[num].classList.add('text-green','fa-caret-up');
+            }
+          }
+      
+  function Readmore(){
+        var txt1= document.getElementById("des1")
+        var txt2=document.getElementById("des2")
+        var btn_c= document.getElementById("btn-c")
+        var btn_r= document.getElementById("btn-r")
+        var name= document.getElementById("p-name-3")
+
+        txt1.classList.add("d-none")
+        txt2.classList.remove("d-none")
+        btn_c.classList.remove("d-none")
+        btn_r.classList.add("d-none")
+        name.classList.add("t-3")
+        name.classList.remove("t-12")
+
+        
+  }
+  function Close(){
+        var txt1= document.getElementById("des1")
+        var txt2=document.getElementById("des2")
+        var btn_c= document.getElementById("btn-c")
+        var btn_r= document.getElementById("btn-r")
+        var name= document.getElementById("p-name-3")
+        txt1.classList.remove("d-none")
+        txt2.classList.add("d-none")
+        btn_c.classList.add("d-none")
+        btn_r.classList.remove("d-none")
+        name.classList.remove("t-3")
+        name.classList.add("t-12")
+  }
+  setTimeout(() => { green_red()}, 500);
+  </script>
+</body>
+</html>

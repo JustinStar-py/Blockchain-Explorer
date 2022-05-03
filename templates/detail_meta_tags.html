@@ -1,0 +1,29 @@
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% if request.resolver_match.kwargs.search|length > 12 %}
+     <title>
+         Address {{request.resolver_match.kwargs.search}} | Blockchain Search Engine
+     </title>
+     <meta name="Description" content=" {{request.resolver_match.kwargs.search}} Using this address you can view all your transactions (received and sent) and also view and share your balance in detail..." />
+     <meta name="keywords" content="bitcoin, explorer, engine, search, blockchain, crypto, currency" />
+     <meta name="format-detection" content="telephone=no" />
+     <meta property="og:title" content=" Address {{request.resolver_match.kwargs.search}} | Blockchain Search Engine" />
+     <meta property="og:description" content="{{request.resolver_match.kwargs.search}} Using this address you can view all your transactions (received and sent) and also view and share your balance in detail..." />
+{% else %}
+     <title>
+        Data of {{request.resolver_match.kwargs.search}} | Blockchain Search Engine
+      </title>
+      <meta name="Description" content=" {{request.resolver_match.kwargs.search}} Live Chart - You can see all the information about {{request.resolver_match.kwargs.search}} such as price, market value, history as well as its chart, etc. on our website." />
+      <meta name="keywords" content="bitcoin, explorer, engine, search, blockchain, crypto, currency" />
+      <meta name="format-detection" content="telephone=no" />
+      <meta property="og:title" content="Data of {{request.resolver_match.kwargs.search}} | Blockchain Search Engine" />
+      <meta property="og:description" content="{{request.resolver_match.kwargs.search}} Live Chart - You can see all the information about {{request.resolver_match.kwargs.search}} such as price, market value, history as well as its chart, etc. on our website." />
+{% endif %}
+      <meta name="author" content="AtomicEngine.pythonanywhere.com" />
+      <meta property="og:site_name" content="Blockchain Search Engine" />
+      <meta property="og:type" content="website" />
+      <meta property="og:image" content="AtomicEngine.pythonanywhere.com/static/images/yorocket-logo.webp" />
+      <meta property="og:url" content="AtomicEngine.pythonanywhere.com/scan/{{request.resolver_match.kwargs.search}}" />
+      <meta property="og:image:alt" content="Visit AtomicEngine.pythonanywhere.com" />

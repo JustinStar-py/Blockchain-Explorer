@@ -1,0 +1,148 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  background: #644bff;
+  padding: 0 20px;
+}
+
+::selection{
+  color: #fff;
+  background: #664AFF;
+}
+.wrapper{
+  position: absolute;
+  top: 63%;
+  right: 50%;
+}
+.search-input input{
+  height: 55px;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 17px;
+  padding: 0 60px 0 20px;
+  font-size: 18px;
+  box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+}
+@media only screen and (min-width: 600px) {
+      .wrapper .search-input{
+        background: #fff;
+        width: 200%;
+        border-radius: 15px;
+        position: relative;
+        box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
+      }
+      .search-input input{
+        height: 55px;
+        width: 100%;
+        outline: none;
+        border: none;
+        border-radius: 17px;
+        padding: 0 60px 0 20px;
+        font-size: 18px;
+        box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+      }
+      p.networks {
+        padding-top: 10px;
+    }
+  }
+.search-input.active input{
+  border-radius: 15px 15px 15px 0;
+}
+.search-input .autocom-box{
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  max-height: 280px;
+  overflow-y: auto;
+}
+.search-input.active .autocom-box {
+  opacity: 1;
+  pointer-events: auto;
+  color: black;
+  font-size: larger;
+  position: fixed;
+  background: white;
+  border-radius: 0px 0px 10px 10px;
+}
+.autocom-box li{
+  list-style: none;
+  padding: 8px 12px;
+  display: none;
+  width: 100%;
+  cursor: default;
+  border-radius: 3px;
+}
+.search-input.active .autocom-box li{
+  display: block;
+}
+.autocom-box li:hover{
+  background: #efefef;
+}
+.search-input .icon {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  height: 55px;
+  width: 55px;
+  text-align: center;
+  line-height: 80px;
+  font-size: 20px;
+  color: #644bff;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  canvas {
+  width: fit-content;
+  height: fit-content;
+  }
+  .frame {
+   display: initial;
+   width: 100%;
+   height: 450px;
+   overflow: hidden;
+   position: relative;
+   color: white;
+   margin: 0px;
+   padding-top: 0px;
+   border-radius: 2em;
+   box-shadow: 0 4px 10px rgb(0 0 0 / 75%), 0 8px 30px rgb(0 0 0 / 50%);
+ }
+   .frame-header {
+          position: relative;
+          z-index: 10;
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
+          padding: 0px;
+          top: 5%;
+      }
+  .frame-header .image {
+        left: 30% !important;
+      }
+   .wrapper {
+       position: absolute;
+       top: 55%;
+       right: 10%;
+       width: 80%;
+      }
+    .wrapper .search-input {
+        background: #fff;
+        border-radius: 15px;
+        position: relative;
+        box-shadow: 0px 1px 5px 3px rgb(0 0 0 / 12%);
+    }
+    .frame-header .info {
+      padding: 3px;
+      position: relative;
+      top: 300px;
+  }
+  }

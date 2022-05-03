@@ -1,0 +1,14 @@
+canvas{
+    background-image: url(static/images/bg.jpg);
+    padding: 0%;
+    margin: 0%;
+    position : fixed;
+    overflow: hidden;
+    background-repeat:repeat-y;
+    background-size: cover;
+    filter: blur(3.3px);
+    width: -webkit-fill-available;
+}
+
+
+

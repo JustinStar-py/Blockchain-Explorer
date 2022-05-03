@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include "meta_tags.html" %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/design.css' %}">
+    <style>
+      @media only screen and (min-width: 800px) {
+              canvas{
+                background-image: url(static/images/bg-desktop.jpg);
+                background-size: cover;
+                filter: hue-rotate(180deg);
+                animation: filter-color 10s infinite;
+              }
+      }
+      @media only screen and (max-width: 600px) {
+        p.networks {
+          position: relative;
+          top: 10px;
+      }
+    }
+      @keyframes filter-color {
+        0% {filter: hue-rotate(300deg);}
+        50% {filter: hue-rotate(130deg);}
+        100% {filter: hue-rotate(300deg);}
+      }
+    </style>
+</head>
+<body >
+  <div  id="particles"></div>
+  <div class="frame" >
+    <header class="frame-header">
+        <div class="image">
+          <img class="album-artwork" src="{% static 'images/bsep.png' %}"/>
+        </div>
+        <div class="info">
+          <div class="subtitle">◉ Blockchain Search Engine ◉<br></div>
+            <!-- Price:{{response|truncatechars:15}}$</div> -->
+            <p class="networks" id="test">◉ MATIC ◉ SOL ◉ BSC ◉ CARDANO ◉ BTC ◉ TRX ◉</p>
+          </div>
+    </header>
+    <div class="frame-bg">
+      <img class="bg-color album-artwork" src="https://is2-ssl.mzstatic.com/image/thumb/Music118/v4/1c/77/af/1c77af17-4ca7-1871-9d53-3683eab952c0/source/600x600bb.jpg"/>
+      <img class="bg-black album-artwork" src="https://is2-ssl.mzstatic.com/image/thumb/Music118/v4/1c/77/af/1c77af17-4ca7-1871-9d53-3683eab952c0/source/600x600bb.jpg"/>
+      <img class="bg-color-2 album-artwork" src="https://is2-ssl.mzstatic.com/image/thumb/Music118/v4/1c/77/af/1c77af17-4ca7-1871-9d53-3683eab952c0/source/600x600bb.jpg"/>
+    </div>	
+    </div>
+  <form action="{% url 'scan:detail_account_address' %}" method="GET" autocomplete="off">
+    <div class="wrapper">
+      <div class="search-input">
+        <input name="search" type="text" placeholder="Search by Address / Coins / ..." id="input_f">
+        <div class="autocom-box">
+        </div>
+       <button class="icon" onclick="trip()"><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+  </form>
+  
+    <script src="{% static 'js/suggestions.js' %}"></script>
+    <script src="{% static 'js/autocomplete.js' %}"></script>
+    <script src="{% static 'js/atoms.js' %}"></script>
+
+</html>
